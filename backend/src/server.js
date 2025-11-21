@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import connectDB from './config/db.js';
+import authRoutes from './src/routes/authRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limit
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Test route
 app.get('/', (req, res) => {

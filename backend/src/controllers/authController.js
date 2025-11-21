@@ -8,15 +8,12 @@ import generateToken from '../utils/generateToken.js';
 // @access  PUBLIC
 const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
-
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'User already exist' });
     }
-
     const roleModel = role === 'player' ? 'Player' : 'Pitch';
-
     const user = await User.create({
       name,
       email,
@@ -24,7 +21,6 @@ const registerUser = async (req, res) => {
       role,
       roleModel,
     });
-
     let profile;
     if (role === 'player') {
       profile = await Player.create({ user: user._id });
@@ -33,12 +29,9 @@ const registerUser = async (req, res) => {
     } else {
       return res.status(400).json({ message: 'Invalid role' });
     }
-
     user.profile = profile._id;
     await user.save();
-
     const token = generateToken(res, user._id, user.role);
-
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -57,13 +50,10 @@ const registerUser = async (req, res) => {
 // @access  PUBLIC
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email }).populate('profile');
-
     if (user && (await user.comparePassword(password))) {
       const token = generateToken(res, user._id, user.role);
-
       res.status(200).json({
         _id: user._id,
         name: user.name,

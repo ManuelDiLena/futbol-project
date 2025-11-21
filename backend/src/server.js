@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import connectDB from './config/db.js';
-import authRoutes from './src/routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 

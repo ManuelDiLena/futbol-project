@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-const pitchSchema = new mongoose.Schema(
+const fieldSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    pitchName: {
+    fieldName: {
       type: String,
     },
     location: {
@@ -16,7 +16,7 @@ const pitchSchema = new mongoose.Schema(
     schedules: {
       type: String,
     },
-    pitchCount: {
+    fieldCount: {
       type: Number,
     },
     matchTypes: {
@@ -32,5 +32,5 @@ const pitchSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Pitch = mongoose.model('Pitch', pitchSchema);
-export default Pitch;
+const Field = mongoose.model('Field', fieldSchema);
+export default Field;

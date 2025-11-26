@@ -90,18 +90,18 @@ export default function Register() {
               <GiSoccerKick className={`h-8 w-8 ${role === 'player' ? 'text-green-500' : 'text-gray-400'}`} />
               <span className='mt-2 font-medium text-white'>Player</span>
             </button>
-            {/* Admin Pitch option */}
+            {/* Admin Field option */}
             <button
               type='button'
-              onClick={() => setRole('adminPitch')}
+              onClick={() => setRole('adminField')}
               className={`flex flex-col items-center justify-center rounded-lg border-2 p-4 cursor-pointer
-                          ${role === 'adminPitch' 
+                          ${role === 'adminField' 
                             ? 'border-green-500 bg-gray-700' 
                             : 'border-gray-600 bg-gray-800 hover:bg-gray-700'
                           }`}
             >
-              <GiSoccerField className={`h-8 w-8 ${role === 'adminPitch' ? 'text-green-500' : 'text-gray-400'}`} />
-              <span className='mt-2 font-medium text-white'>Futbol pitch</span>
+              <GiSoccerField className={`h-8 w-8 ${role === 'adminField' ? 'text-green-500' : 'text-gray-400'}`} />
+              <span className='mt-2 font-medium text-white'>Futbol field</span>
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import Player from '../models/Player.js';
-import Pitch from '../models/Pitch.js';
+import Field from '../models/Field.js';
 import generateToken from '../utils/generateToken.js';
 
 // @desc    Register new user
@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
     if (userExists) {
       return res.status(400).json({ message: 'User already exist' });
     }
-    const roleModel = role === 'player' ? 'Player' : 'Pitch';
+    const roleModel = role === 'player' ? 'Player' : 'Field';
     const user = await User.create({
       name,
       email,
@@ -24,8 +24,8 @@ const registerUser = async (req, res) => {
     let profile;
     if (role === 'player') {
       profile = await Player.create({ user: user._id });
-    } else if (role === 'adminPitch') {
-      profile = await Pitch.create({ user: user._id });
+    } else if (role === 'adminField') {
+      profile = await Field.create({ user: user._id });
     } else {
       return res.status(400).json({ message: 'Invalid role' });
     }
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
       res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (err) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: err.message });
   }
 };
 

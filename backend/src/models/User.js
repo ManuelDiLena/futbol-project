@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['player', 'adminPitch', 'adminTeam'],
+      enum: ['player', 'adminField', 'adminTeam'],
       required: true,
     },
     profile: {
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
     roleModel: {
       type: String,
       required: true,
-      enum: ['Player', 'Pitch'],
+      enum: ['Player', 'Field'],
     }
   },
   { timestamps: true }

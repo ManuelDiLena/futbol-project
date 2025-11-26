@@ -9,19 +9,5 @@ const apiClient = axios.create({
   }
 });
 
-// Add the JWT token to the headers
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = null;
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 export default apiClient;
 

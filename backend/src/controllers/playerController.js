@@ -22,7 +22,7 @@ const getPlayerProfile = async (req, res) => {
 const updatePlayerProfile = async (req, res) => {
   try {
     const { age, availability, avatar, location, positions } = req.body;
-    const player = await Player.findById(req.user.porfile);
+    const player = await Player.findById(req.user.profile);
     if (!player) {
       return res.status(404).json({ message: 'Player profile not found' });
     }

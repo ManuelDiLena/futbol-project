@@ -12,7 +12,6 @@ const playerSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: '',
     },
     positions: {
       type: [String],

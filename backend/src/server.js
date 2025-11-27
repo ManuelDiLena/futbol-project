@@ -7,6 +7,8 @@ import rateLimit from 'express-rate-limit';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import playerRoutes from './routes/playerRoutes.js';
+import fieldRoutes from './routes/fieldRoutes.js';
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ app.use(limiter);
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/players', playerRoutes);
+app.use('/api/fields', fieldRoutes);
 
 // Test route
 app.get('/', (req, res) => {

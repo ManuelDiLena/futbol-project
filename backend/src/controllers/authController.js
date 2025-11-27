@@ -60,6 +60,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         role: user.role,
         profileId: user.profile?._id,
+        profileComplete: user.profileComplete,
         token,
       });
     } else {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import AuthLayout from '../components/AuthLayout';
@@ -6,18 +6,12 @@ import { GiSoccerBall } from 'react-icons/gi';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useAuthStore((state) => state);
+  const { login } = useAuthStore((state) => state);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,7 +19,13 @@ export default function Login() {
     setError(null);
     const result = await login(email, password);
     setIsLoading(false);
-    if (!result.success) {
+    if (result.success) {
+      if (result.profileComplete) {
+        navigate('/dashboard');
+      } else {
+        navigate('/onboarding');
+      }
+    } else {
       setError(result.message);
     }
   };

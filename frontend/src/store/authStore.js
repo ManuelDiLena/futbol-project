@@ -8,6 +8,7 @@ const useAuthStore = create(
       token: null,
       user: null,
       isAuthenticated: false,
+      profileComplete: false,
       loadingAuth: true,
 
       // Register user
@@ -24,9 +25,10 @@ const useAuthStore = create(
               profileId: data.profileId,
             },
             isAuthenticated: true,
+            profileComplete: false
           });
           apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-          return { success: true, role: data.role };
+          return { success: true, role: data.role, profileComplete: false };
         } catch (err) {
           return { success: false, message: err.response?.data?.message || 'Registration error' };
         }
@@ -46,9 +48,10 @@ const useAuthStore = create(
               profileId: data.profileId,
             },
             isAuthenticated: true,
+            profileComplete: data.profileComplete
           });
           apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-          return { success: true };
+          return { success: true, profileComplete: data.profileComplete };
         } catch (err) {
           return { success: false, message: err.response?.data?.message || 'Login error' };
         }
@@ -60,17 +63,44 @@ const useAuthStore = create(
           token: null,
           user: null,
           isAuthenticated: false,
+          profileComplete: false
         });
         delete apiClient.defaults.headers.common['Authorization'];
+      },
+
+      // Update the post-onboarding status
+      setProfileComplete: () => {
+        set ({ profileComplete: true });
       },
 
       // Load user (If the token exists but the state was lost)
       loadUserFromToken: async () => {
         const token = get().token;
-        if (token) {
-          apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        if (!token) {
+          set({ loadingAuth: false });
+          return;
         }
-      }
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        try {
+          const { data } = await apiClient.get('/api/auth/me');
+          set({
+            user: data.user,
+            isAuthenticated: true,
+            profileComplete: data.profileComplete,
+            loadingAuth: false,
+          });
+        } catch (err) {
+          console.error('Invalid token:', err?.response?.data);
+          set({
+            token: null,
+            user: null,
+            isAuthenticated: false,
+            profileComplete: false,
+            loadingAuth: false,
+          });
+          delete apiClient.defaults.headers.common['Authorization'];
+        }
+      },
     }),
     {
       name: 'auth-storage',
@@ -81,6 +111,6 @@ const useAuthStore = create(
 );
 
 // (Optional) Load the user from the token when the app starts
-useAuthStore.getState().loadUserFromToken();
+// useAuthStore.getState().loadUserFromToken();
 
 export default useAuthStore;

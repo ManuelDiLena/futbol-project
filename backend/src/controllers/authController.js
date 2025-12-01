@@ -71,4 +71,29 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser };
+// @desc    Get logged-in user info
+// @route   GET /api/auth/me
+// @access  PRIVATE
+const getMe = async (req, res) => {
+  try {
+    const user = req.user;
+    if (user) {
+      await user.populate('profile');
+      res.status(200).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profileId: user.profile?._id,
+      },
+      profileComplete: user.profileComplete || false,
+    });
+    }
+  } catch (error) {
+    console.error("Error in getMe:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { registerUser, loginUser, getMe };

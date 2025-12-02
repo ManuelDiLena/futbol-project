@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 
 export default function Dashboard() {
-  const { user, logout } = useAuthStore((state) => state);
   const navigate = useNavigate();
+  const { user, logout } = useAuthStore((state) => state);
 
   const handleLogout = () => {
     logout();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
-import AuthLayout from '../components/AuthLayout';
+import AuthLayout from '../components/ui/AuthLayout';
 import { GiSoccerBall } from 'react-icons/gi';
 
 export default function Login() {

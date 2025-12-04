@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema(
     profileComplete: {
       type: Boolean,
       default: false,
+    },
+    team: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Team',
+      default: null
     }
   },
   { timestamps: true }

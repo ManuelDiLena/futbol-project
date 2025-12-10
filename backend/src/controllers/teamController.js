@@ -123,6 +123,7 @@ const getTeamMessages = async (req, res) => {
 };
 
 // @desc    Save message
+// @route   POST /api/teams/:id/messages
 const saveMessage = async (req, res) => {
   const { content } = req.body;
   try {

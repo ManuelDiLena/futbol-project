@@ -12,7 +12,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import playerRoutes from './routes/playerRoutes.js';
 import fieldRoutes from './routes/fieldRoutes.js';
-// import teamRoutes from './routes/teamRoutes.js';
+import teamRoutes from './routes/teamRoutes.js';
 
 dotenv.config();
 
@@ -48,7 +48,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/fields', fieldRoutes);
-// app.use('/api/teams', teamRoutes);
+app.use('/api/teams', teamRoutes);
 
 // Socket logic
 io.on('connection', (socket) => {

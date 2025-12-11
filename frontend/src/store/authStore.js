@@ -101,6 +101,12 @@ const useAuthStore = create(
           delete apiClient.defaults.headers.common['Authorization'];
         }
       },
+
+      updateUser: (userData) => {
+        set((state) => ({
+          user: { ...state.user, ...userData },
+        }));
+      },
     }),
     {
       name: 'auth-storage',

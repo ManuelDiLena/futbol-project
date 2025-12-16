@@ -10,7 +10,7 @@ const PlayerDashboard = ({ profile }) => {
       <div>
         <h3 className='font-semibold text-gray-400'>Positions:</h3>
         <ul className='flex flex-wrap gap-2 mt-2'>
-          {profile.prositions.map((pos) => (
+          {profile?.prositions?.map((pos) => (
             <li key={pos} className='rounded-full bg-green-800 px-3 py-1 text-sm'>
               {pos}
             </li>

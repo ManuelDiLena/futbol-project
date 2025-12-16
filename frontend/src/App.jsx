@@ -5,6 +5,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
+import CreateTeam from './pages/CreateTeam';
+import FindTeam from './pages/FindTeam';
+import TeamDashboard from './pages/TeamDashboard';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/onboarding' element={<Onboarding />} />
+          <Route path='/create-team' element={<CreateTeam />} />
+          <Route path='/find-team' element={<FindTeam />} />
+          <Route path='/my-team' element={<TeamDashboard />} />
         </Route>
         {/* DEFAULT ROUTES */}
         <Route path='/' element={<Login />} />

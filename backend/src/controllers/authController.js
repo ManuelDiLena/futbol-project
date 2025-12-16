@@ -90,9 +90,9 @@ const getMe = async (req, res) => {
       profileComplete: user.profileComplete || false,
     });
     }
-  } catch (error) {
-    console.error("Error in getMe:", error);
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    console.error("Error in getMe:", err);
+    res.status(500).json({ message: err.message });
   }
 };
 

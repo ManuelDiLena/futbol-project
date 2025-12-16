@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
-import useAuthStore from '../stores/authStore';
-import useTeamStore from '../stores/teamStore';
+import useAuthStore from '../store/authStore';
+import useTeamStore from '../store/teamStore';
 import { FaShieldAlt } from 'react-icons/fa';
 import { GiSoccerBall } from 'react-icons/gi';
 

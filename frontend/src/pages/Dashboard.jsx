@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
+import useTeamStore from '../store/teamStore';
 import apiClient from '../api/apiClient';
-import { GiSoccerBall } from "react-icons/gi";
-import { CiEdit } from "react-icons/ci";
+import PlayerDashboard from '../components/PlayerDashboard';
+import { GiSoccerBall } from 'react-icons/gi';
+import { CiEdit } from 'react-icons/ci';
+import { FaSearch, FaPlusCircle } from 'react-icons/fa';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore((state) => state);
+  const { user, logout } = useAuthStore();
+  const { myTeam, fetchMyTeam } = useTeamStore();
 
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +31,9 @@ export default function Dashboard() {
       }
     };
     fetchProfile();
+    if (user?.role === 'player' || user?.role === 'adminTeam') {
+      fetchMyTeam();
+    }
   }, [user]);
 
   const handleLogout = () => {
@@ -65,10 +72,40 @@ export default function Dashboard() {
             </div>
           )}
         </div>
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold text-gray-400">Next matches...</h2>
+        <div className='mt-8'>
+          <h2 className='text-xl font-semibold text-gray-400'>Next matches...</h2>
         </div>
       </main>
+      {user?.role !== 'adminField' && (
+        <div className='w-full max-w-4xl mx-auto mt-6'>
+          <h2 className='text-xl font-semibold text-white mb-4'>Your Team</h2>
+            {myTeam ? (
+              <Link to='/my-team' className='block bg-linear-to-r from-green-900 to-gray-800 p-6 rounded-lg border border-green-800 hover:border-green-500 transition shadow-lg'>
+                <div className='flex items-center justify-between'>
+                  <div className='flex items-center gap-4'>
+                    <span className='text-4xl'>{myTeam.emblem}</span>
+                    <div>
+                      <h3 className='text-2xl font-bold text-white'>{myTeam.name}</h3>
+                      <p className='text-green-400 text-sm'>Enter the squad &rarr;</p>
+                    </div>
+                  </div>
+                  {user.role === 'adminTeam' && <span className='bg-yellow-600 text-xs px-2 py-1 rounded text-black font-bold'>CAPTAIN</span>}
+                </div>
+              </Link>
+            ) : (
+              <div className='grid grid-cols-2 gap-4'>
+                <Link to='/create-team' className='bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-green-500 flex flex-col items-center justify-center text-center gap-2 group'>
+                  <FaPlusCircle className='text-3xl text-gray-500 group-hover:text-green-500 transition' />
+                  <span className='font-semibold text-gray-300 group-hover:text-white'>Create Team</span>
+                </Link>
+                <Link to='/find-team' className='bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-green-500 flex flex-col items-center justify-center text-center gap-2 group'>
+                  <FaSearch className='text-3xl text-gray-500 group-hover:text-green-500 transition' />
+                  <span className='font-semibold text-gray-300 group-hover:text-white'>Find Team</span>
+                </Link>
+              </div>
+            )}
+        </div>
+      )}
     </div>
   );
 };

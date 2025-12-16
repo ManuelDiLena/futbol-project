@@ -36,8 +36,8 @@ const updateFieldProfile = async (req, res) => {
     user.profileComplete = true;
     await user.save();
     res.status(200).json(updatedField);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -51,8 +51,8 @@ const getPublicFieldProfile = async (req, res) => {
       return res.status(404).json({ message: 'Field not found' });
     }
     res.status(200).json(field);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
